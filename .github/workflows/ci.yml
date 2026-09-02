@@ -18,6 +18,11 @@ jobs:
       - name: Check repository hygiene
         run: git diff --check
 
+      - name: Lint Markdown
+        uses: DavidAnson/markdownlint-cli2-action@v20
+        with:
+          globs: "**/*.md"
+
       - name: Validate shared files
         shell: python
         run: |
@@ -54,6 +59,6 @@ jobs:
           require "yaml"
           Dir.glob("**/*.{yml,yaml}", File::FNM_DOTMATCH).each do |path|
             next if path.start_with?(".git/")
-            YAML.safe_load_file(path, aliases: true)
+            YAML.safe_load(File.read(path), aliases: true)
           end
           RUBY
