@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check repository hygiene
+        run: git diff --check
+
+      - name: Validate shared files
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          root = Path(".")
+          required = [
+              "SECURITY.md",
+              "CONTRIBUTING.md",
+              "PULL_REQUEST_TEMPLATE.md",
+              ".github/CODEOWNERS",
+              ".github/ISSUE_TEMPLATE/config.yml",
+              "profile/README.md",
+          ]
+          missing = [path for path in required if not (root / path).is_file()]
+          if missing:
+              raise SystemExit(f"Missing required files: {', '.join(missing)}")
+
+          link_pattern = re.compile(r"\[[^]]+\]\(([^)]+)\)")
+          for markdown in root.rglob("*.md"):
+              text = markdown.read_text(encoding="utf-8")
+              for target in link_pattern.findall(text):
+                  target = target.strip().split("#", 1)[0]
+                  if not target or "://" in target or target.startswith(("mailto:", "/")):
+                      continue
+                  if not (markdown.parent / target).exists():
+                      raise SystemExit(f"{markdown}: broken relative link {target}")
+
+      - name: Validate YAML syntax
+        shell: ruby
+        run: |
+          require "yaml"
+          Dir.glob("**/*.{yml,yaml}", File::FNM_DOTMATCH).each do |path|
+            next if path.start_with?(".git/")
+            YAML.safe_load_file(path, aliases: true)
+          end
