@@ -13,7 +13,7 @@ jobs:
     name: validate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Check repository hygiene
         run: git diff --check
@@ -48,10 +48,12 @@ jobs:
                       raise SystemExit(f"{markdown}: broken relative link {target}")
 
       - name: Validate YAML syntax
-        shell: ruby
+        shell: bash
         run: |
+          ruby <<'RUBY'
           require "yaml"
           Dir.glob("**/*.{yml,yaml}", File::FNM_DOTMATCH).each do |path|
             next if path.start_with?(".git/")
             YAML.safe_load_file(path, aliases: true)
           end
+          RUBY
