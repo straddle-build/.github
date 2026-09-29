@@ -31,7 +31,7 @@ Each SDK wraps the full Straddle API for one language:
 
 ## Agent skills
 
-[skills](https://github.com/straddle-build/skills) teaches coding agents to set up, plan, build, test, and audit a Straddle integration, and to prepare it for production. Install the skills with the [`skills`](https://github.com/vercel-labs/skills) CLI:
+[skills](https://github.com/straddle-build/skills) teaches coding agents to plan, build, test, and audit a Straddle integration, check it before go-live, and migrate from another payment provider. Install the skills with the [`skills`](https://github.com/vercel-labs/skills) CLI:
 
 ```sh
 npx skills add straddle-build/skills
