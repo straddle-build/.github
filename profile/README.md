@@ -1,42 +1,60 @@
 # Straddle Build
 
-Open-source developer tools for [Straddle](https://straddle.com)'s Pay by Bank and Embed APIs. This organization publishes the Straddle CLI, official SDKs, and agent skills. For API concepts and endpoint reference, see the [Straddle docs](https://docs.straddle.com).
+Build Pay by Bank and Embed integrations with [Straddle](https://straddle.com). Use coding-agent skills, MCP servers, guided setup, a command-line tool, and official SDKs to connect your application to the API.
 
-## Get started
+## Build with your coding agent
 
-Install the CLI, then run `straddle doctor` to check your API key and environment:
-
-```sh
-brew install straddle-build/tap/straddle
-straddle doctor
-```
-
-The CLI defaults to the sandbox environment. For other install methods, see the [CLI README](https://github.com/straddle-build/straddle-cli#install).
-
-## CLI
-
-[straddle-cli](https://github.com/straddle-build/straddle-cli) covers every Straddle API operation from one binary, with a human surface and an agent surface (`--agent`). It also syncs charges, payouts, customers, paykeys, and funding events to a local SQLite store for offline search, reconciliation, and return analytics.
-
-## SDKs
-
-Each SDK wraps the full Straddle API for one language:
-
-| Language | Repository | Install |
-| --- | --- | --- |
-| TypeScript | [straddle-typescript](https://github.com/straddle-build/straddle-typescript) | `npm install @straddlecom/straddle` |
-| Python | [straddle-python](https://github.com/straddle-build/straddle-python) | `pip install straddle` |
-| Go | [straddle-go](https://github.com/straddle-build/straddle-go) | `go get github.com/straddle-build/straddle-go` |
-| Ruby | [straddle-ruby](https://github.com/straddle-build/straddle-ruby) | `gem install straddle` |
-| .NET | [straddle-dotnet](https://github.com/straddle-build/straddle-dotnet) | `dotnet add package Straddle` |
-
-## Agent skills
-
-[skills](https://github.com/straddle-build/skills) teaches coding agents to plan, build, test, and audit a Straddle integration, check it before go-live, and migrate from another payment provider. Install the skills with the [`skills`](https://github.com/vercel-labs/skills) CLI:
+Start the [Straddle Wizard](https://github.com/straddle-build/wizard) from your application directory. You need Node.js 22.18 or later and a supported coding agent: Claude Code, Codex, or Cursor.
 
 ```sh
-npx skills add straddle-build/skills
+npx @straddlecom/wizard@latest
 ```
 
-## Contributing and security
+The Wizard helps you choose an integration and agent, install the Straddle skills, and begin the workflow. The skills guide setup, planning, implementation, sandbox testing, and a production readiness review.
 
-To contribute, read the [contributing guide](https://github.com/straddle-build/.github/blob/main/CONTRIBUTING.md). To report a vulnerability, follow the [security policy](https://github.com/straddle-build/.github/blob/main/SECURITY.md) instead of opening a public issue.
+To add skills to an existing agent setup, start with the [Straddle skills installation guide and catalog](https://github.com/straddle-build/skills).
+
+## Connect your agent with MCP
+
+Use Straddle's hosted Model Context Protocol (MCP) servers to work with documentation and the API from your coding agent:
+
+- **Docs MCP:** Search Straddle documentation without an API key.
+- **API MCP:** Discover endpoints and send requests authorized by your Straddle API key.
+
+Follow the [MCP connection guide](https://straddle-build-straddle-openapi.apidocumentation.com/connect-mcp) to connect your client. The [Straddle plugin](https://github.com/straddle-build/skills) includes both connections alongside the integration skills.
+
+## Choose a tool
+
+Choose the starting point for your task.
+
+| Task | Start here |
+| --- | --- |
+| Build an integration with a coding agent | [Wizard](https://github.com/straddle-build/wizard) |
+| Plan, test, migrate, or audit an integration | [Skills](https://github.com/straddle-build/skills) |
+| Call the API from a terminal or return JSON to an agent | [Straddle CLI](https://github.com/straddle-build/straddle-cli) |
+| Search local payment records, investigate returns, or reconcile funding | [CLI data workflows](https://github.com/straddle-build/straddle-cli) |
+| Install the CLI with Homebrew | [Homebrew tap](https://github.com/straddle-build/homebrew-tap) |
+
+## Use an SDK
+
+Choose your application's language. Each SDK README includes installation, configuration, and request examples.
+
+| Language | SDK |
+| --- | --- |
+| TypeScript and JavaScript | [straddle-typescript](https://github.com/straddle-build/straddle-typescript) |
+| Python | [straddle-python](https://github.com/straddle-build/straddle-python) |
+| Go | [straddle-go](https://github.com/straddle-build/straddle-go) |
+| Ruby | [straddle-ruby](https://github.com/straddle-build/straddle-ruby) |
+| C# and .NET | [straddle-dotnet](https://github.com/straddle-build/straddle-dotnet) |
+
+## Read the docs
+
+Use the following guides to understand the API and plan your integration:
+
+- [Product guides](https://docs.straddle.com/guides/overview): Learn how customers, bank connections, payments, and embedded accounts work together.
+- [API reference](https://docs.straddle.com/api-reference/introduction): Find endpoints, request fields, authentication, and response formats.
+- [Sandbox guide](https://docs.straddle.com/guides/resources/sandbox-paybybank): Test payment flows with sandbox data.
+
+## Contribute or report an issue
+
+Open usage questions and bug reports in the relevant repository. Read the [contributing guide](https://github.com/straddle-build/.github/blob/main/CONTRIBUTING.md) before submitting changes. For vulnerabilities, use the private reporting route in the [security policy](https://github.com/straddle-build/.github/blob/main/SECURITY.md).
